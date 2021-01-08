@@ -38,6 +38,7 @@ pm_argparse.add_argument( '-i', '--input', type=str  , help='processing png path
 pm_argparse.add_argument( '-g', '--groundtruth', type=str  , help='groundtruth png path'    )
 pm_argparse.add_argument( '-o', '--output' , type=str  , help='segmented png output path' )
 pm_argparse.add_argument( '-l', '--li' , type=int, default=0  , help='use li threshold instead of minimum (1 to True and 0 to False). Default to 0' )
+pm_argparse.add_argument( '-b', '--black' , type=int, default=0  , help='use = 1 if background is black and houses are blue. Default to 1' )
 
 # read argument and parameters #
 pm_args = pm_argparse.parse_args()
@@ -87,11 +88,18 @@ predicted = np.uint8(median_filtered > threshold) * 255
 #plt.axis('off')
 #plt.title('minimum predicted binary image')
 
+# change values to 0 and 255
+if (pm_args.black == 0):
+    predicted = np.where(predicted == predicted.min(), 0, 255)
+    
+else:
+    predicted = np.where(predicted == predicted.min(), 255, 0)
+
 # Export resulting image
 matplotlib.image.imsave(pm_args.output, predicted) 
-  
+
 # Multiplying arrays 
-#groundtruth_1d = np.array(groundtruth.flatten()) 
+#groundtruth_1d = np.array(groundtruth.flatten())  = 255
 #predicted_1d = predicted.flatten() 
   
 # printing result 

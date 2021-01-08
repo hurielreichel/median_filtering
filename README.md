@@ -27,6 +27,11 @@ As observed, the main arguments are the **input** image, the **output** segmente
 $ python3 median-filter.py -i /path/to/input.png -o /path/to/output_segmented.png -g /path/to/groundtruth.png -l 1
 ```
 
+Another optional argument is the transformation of background and house colour when the base image has a black background, as some swisstopo maps. Fr that use the **black** argument, as below:
+```
+$ python3 median-filter.py -i /path/to/input.png -o /path/to/output_segmented.png -g /path/to/groundtruth.png -l 1 -b 1
+```
+
 # Preliminary results for the proof of concept
 
 
